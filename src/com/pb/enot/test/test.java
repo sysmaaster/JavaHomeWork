@@ -1,6 +1,9 @@
-/*
- завданяя Виконано . . .
- &#x41E; &#x447; &#x438;
- &#x449; &#x435; &#x43D;
- &#x43E; &#x447; &#x438
-*/
+package com.pb.enot.test;
+
+public class test {
+    public static void main(String[] args) {
+
+
+    }
+
+}
