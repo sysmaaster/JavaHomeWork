@@ -1,4 +1,5 @@
 package com.pb.enot.hw2;
+
 import java.util.Scanner;
 
 public class Interval {

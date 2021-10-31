@@ -1,4 +1,5 @@
 package com.pb.enot.hw3;
+
 import java.util.Scanner;
 
 public class Array {

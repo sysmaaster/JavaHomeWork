@@ -5,78 +5,87 @@ public class Book {
     private String bookAuthor;
     private int dateBy;
 
-    public Book(){}
+    public Book() {
+    }
 
     /**
-     * @param bookNames Назва книги
+     * @param bookNames  Назва книги
      * @param bookAuthor Автор Книги
-     * @param dateBy Год издания
+     * @param dateBy     Год издания
      */
-    public Book (String bookNames,String bookAuthor,int dateBy)
-    {
+    public Book(String bookNames, String bookAuthor, int dateBy) {
         this.bookNames = bookNames;
         this.bookAuthor = bookAuthor;
-        this.dateBy = dateBy;
-    }
-
-
-    public void setBookNames(String names) {
-        this.bookNames = names;
-    }
-    public void setBookAuthor(String author) {
-        this.bookAuthor = author;
-    }
-    public void setDateBy(int dateBy) {
         this.dateBy = dateBy;
     }
 
     public String getBookNames() {
         return bookNames;
     }
-    public String getBookAuthor() {
-        return bookAuthor;
-    }
+    public String getBookAuthor() { return bookAuthor;  }
     public int getDateBy() {
         return dateBy;
     }
-
-
     /**
      * Взять Книгу
-     * @param names  назва книги
+     * @param n число книг
+     * @param names назва книги
      */
     public void takeBook(String names, int n) {
         System.out.println("[ " + names + " взял " + n + " книг ]");
     }
-    public void takeBook( String names, String... author) {
-        System.out.print("[ " + names + " взял книги :");
-        for (String autors : author) {
-            System.out.print(autors + ", ");
-        }System.out.println(" ]");
-    }
 
     /**
-     * Вернут Книгу
+     * @param names назва книги
+     * @param author книги
+     */
+    public void takeBook(String names, String... author) {
+        System.out.print("[ " + names + " взял книги: ");
+        for (String autors : author) {
+            System.out.print(autors + ", ");
+        }
+        System.out.println(" ]");
+    }
+    public void takeBook(Book... book) {
+        System.out.println("[ проводим інвентаризацію:  ");
+        for (Book autors : book) {
+            System.out.print(autors + ",");
+        }
+        System.out.println(" ]");
+    }
+    /**
+     * Вернуl Книгу
+     * @param n      кількість повернутих книг
      * @param names  назва книги
      */
     public void returnBook(String names, int n) {
-        System.out.println("[ " + names + " вернул " + n + " книги ]");
+        System.out.println("[" + names + " Вернул " + n + " книг]");
     }
 
-
     /**
-     * Вернут Книгу
-     * @param names  назва книги
+     * Вернуl Книгу
+     * @param names  назва книги, , ,
      * @param author Автор
      */
     public void returnBook(String names, String... author) {
-
-        System.out.println("[ " + names + " вернул книги:");
+        System.out.print("[ " + names + " Вернул книги: ");
         for (String autors : author) {
-            System.out.print(autors);
+            System.out.print(autors + ", ");
         }
-        System.out.print(" ]");
+        System.out.println(" ]");
     }
-
-
+    public void returnBook(Book... book) {
+        System.out.println("[ проводим інвентаризацію:  ");
+        for (Book autors : book) {
+            System.out.print(autors + ",");
+        }
+        System.out.println(" ]");
+    }
+    /**
+     * @return  назва книги,Автор,Год випуску
+     */
+    public String getInfo() {
+        String info = "=> "+getBookNames()+" ("+getBookAuthor()+" "+getDateBy()+") ";
+return info;
+    }
 }

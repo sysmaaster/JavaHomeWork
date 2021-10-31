@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 
 public class Anagram {
     public static void main(String[] args) {
-        String tisA1 ;// Створим масив 1
-        String tisA2 ;// Створим масив 2
+        String tisA1;// Створим масив 1
+        String tisA2;// Створим масив 2
         tisA1 = tokenizer(intText(1));
         tisA2 = tokenizer(intText(2));
         if (tisA1.compareTo(tisA2) == 0) {
@@ -17,6 +17,7 @@ public class Anagram {
             System.out.println("НЕ Анаграмма!");
         }
     }
+
     public static String intText(int n) {
         Scanner in = new Scanner(System.in);
         String inText;
@@ -29,6 +30,7 @@ public class Anagram {
         } while (Objects.equals(inText, ""));
         return inText;
     }
+
     public static String tokenizer(String s) {
         s = s.toLowerCase();
         s = s.replaceAll("[^a-zA-Zа-яёА-ЯЁ]", "");

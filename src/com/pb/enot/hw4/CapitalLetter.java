@@ -16,6 +16,7 @@ public class CapitalLetter {
 
         upperCase(thisArray);
     }
+
     public static void upperCase(String thisArr) {
         int em = thisArr.length();
         char[] fm1 = new char[em];

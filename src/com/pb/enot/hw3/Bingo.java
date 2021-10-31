@@ -14,7 +14,7 @@ public class Bingo {
         int hum;                           // число игрока
         int ii;                           // задуманое число
         int count = 0;                   // лічильник Спроб
-        char re ;                       // Для питаня про повторну Гру
+        char re;                       // Для питаня про повторну Гру
 
         //Начнем Гру
         System.out.println("Игра Угадай число");
@@ -34,10 +34,10 @@ public class Bingo {
                 //проверка Ответов => Правил
                 if (hum == 666) {  //проверка на Желания вийти. Удалить Игру!
                     System.out.println("Дякую  за Гру!");
-                    return ;
-                } else if (hum >100 || hum <0) {
+                    return;
+                } else if (hum > 100 || hum < 0) {
                     System.out.println("Я загадал число только от 1 до 100.");
-                }  else if (ii < hum) {
+                } else if (ii < hum) {
                     System.out.println("Не угадал! Моє число меньше.");
                 } else if (ii > hum) {
                     System.out.println("Не угадал! Моє число больше.");
@@ -45,7 +45,7 @@ public class Bingo {
             }
             while (ii != hum);  // Игрок угадал число?
             System.out.println("Верно. ви угадали!!");
-            System.out.println("Використано >>> "+ count + " спроб!");
+            System.out.println("Використано >>> " + count + " спроб!");
             System.out.println(" Загадать еще число? (+/-)");
             re = read.next().charAt(0);
 

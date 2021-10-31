@@ -7,42 +7,54 @@ public class Reader {
     private String brthDay;
     private String number;
 
-    public Reader() {    }
-    public Reader(String fio,int etik,String facylt,String brthDay,String number) {
+    public Reader(String fio, int etik, String facylt, String brthDay, String number) {
         this.fio = fio;
         this.etik = etik;
         this.facylt = facylt;
         this.brthDay = brthDay;
         this.number = number;
     }
+    /**
+     * @return  номер читательского билета
+     * - ФИО
+     * - дата рождения
+     * - факультет
+     * - телефон
+     */
+    public String getInfo() {
+        String info = "=> "+getEtik()+" "+getFio()+" "+getBrthDay()+" "+getFacylt()+" "+getNumber()+")";
+        return info;
+    }
+
     public String getFio() {
         return fio;
-    }
-    public void setFio(String fio) {
-        this.fio = fio;
     }
     public int getEtik() {
         return etik;
     }
-    public void setEtik(int etik) {
-        this.etik = etik;
-    }
     public String getFacylt() {
         return facylt;
-    }
-    public void setFacylt(String facylt) {
-        this.facylt = facylt;
     }
     public String getBrthDay() {
         return brthDay;
     }
-    public void setBrthDay(String brthDay) {
-        this.brthDay = brthDay;
-    }
     public String getNumber() {
         return number;
     }
-    public void setNumber (String number) {
+
+    public void setFio(String fio) {
+        this.fio = fio;
+    }
+    public void setEtik(int etik) {
+        this.etik = etik;
+    }
+    public void setFacylt(String facylt) {
+        this.facylt = facylt;
+    }
+    public void setBrthDay(String brthDay) {
+        this.brthDay = brthDay;
+    }
+    public void setNumber(String number) {
         this.number = number;
     }
 }
