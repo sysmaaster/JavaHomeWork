@@ -20,6 +20,8 @@ public class VetClinic {
                 Veterinarian.treatAnimal(animal);
             }
         }
+
+        System.out.println("\n"+ "   |\\_/| \n" +"  / @ @ \\ \n" + " ( > * < ) \n'>>>>X<<<<'\n" + "/    O    \\ \n" + "by SysMaaster");
     }
 }
 
