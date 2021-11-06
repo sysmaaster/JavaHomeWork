@@ -1,17 +1,19 @@
 package com.pb.enot.hw6;
 
+import java.util.Objects;
+
 public class Dog extends Animal {
     private String name;
 
     public Dog() {    }
+    public Dog(String name ,String food, String location) {
+        super(name,food, location);
+    }
 
-    public Dog(String food, String location) {  super(food, location);  }
-
-    public String getName() {   return name;  }
     public void setName(String name) {  this.name = name;   }
 
     @Override
-    public void eat() {  System.out.println("Собака ест.");    }
+    public void eat() { System.out.println("Собака ест.");  }
 
     @Override
     public String makeNoise() {
@@ -23,10 +25,8 @@ public class Dog extends Animal {
         if (this == o) return true;
         if (!(o instanceof Dog)) return false;
         if (!super.equals(o)) return false;
-
         Dog dog = (Dog) o;
-
-        return name != null ? name.equals(dog.name) : dog.name == null;
+        return Objects.equals(name, dog.name);
     }
 
     @Override
@@ -38,8 +38,8 @@ public class Dog extends Animal {
 
     @Override
     public String toString() {
-        return "Dog { " +
-                "food='" + getFood() + '\'' +
+        return "Dog { " + "name='" + getNames()+ '\'' +
+                " food='" + getFood() + '\'' +
                 ", location='" + getLocation() + '\'' +
                 " }";
     }

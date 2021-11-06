@@ -8,44 +8,31 @@ import java.io.Serializable;
 public class Horse extends Animal implements Serializable {
     private double weight;
 
-    public Horse() {
+    public Horse() {     }
+    public Horse(String name ,String food, String location) {
+        super(name, food, location);
     }
 
-    public Horse(String food, String location) {
-        super(food, location);
-    }
-
-    public Horse(String food, String location, double weight) {
-        this(food, location);
+    public Horse(String name ,String food, String location, double weight) {
+        this(name, food, location);
         this.weight = weight;
     }
 
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
+    public double getWeight() {   return weight;    }
+    public void setWeight(double weight) {   this.weight = weight;    }
 
     @Override
-    public void eat() {
-        System.out.println("Лошадь ест.");
-    }
+    public void eat() {   System.out.println("Лошадь ест.");    }
 
     @Override
-    public String makeNoise() {
-        return "Иго-го-го-го!!!";
-    }
+    public String makeNoise() {  return "Иго-го-го-го!!!";  }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Horse)) return false;
         if (!super.equals(o)) return false;
-
         Horse horse = (Horse) o;
-
         return Double.compare(horse.weight, weight) == 0;
     }
 
@@ -60,9 +47,9 @@ public class Horse extends Animal implements Serializable {
 
     @Override
     public String toString() {
-        return "Horse { " +
-                "Улюблена Їжа: '" + getFood() + '\'' +
-                " місце продиваня: '" + getLocation() + '\'' +
+        return "Horse { " +  "name='" + getNames()+ '\'' +
+                "food='" + getFood() + '\'' +
+                ", location='" + getLocation() + '\'' +
                 ", weight = " + weight +
                 " }";
     }
@@ -70,6 +57,7 @@ public class Horse extends Animal implements Serializable {
     private void writeObject(ObjectOutputStream os) {
         try {
             os.defaultWriteObject();
+            os.writeObject(getNames());
             os.writeObject(getFood());
             os.writeObject(getLocation());
         } catch (Exception e) {
@@ -80,6 +68,7 @@ public class Horse extends Animal implements Serializable {
     private void readObject(ObjectInputStream is) {
         try {
             is.defaultReadObject();
+            this.setNames((String) is.readObject());
             this.setFood((String) is.readObject());
             this.setLocation((String) is.readObject());
         } catch (Exception e) {

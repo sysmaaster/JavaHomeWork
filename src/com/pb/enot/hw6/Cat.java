@@ -8,8 +8,8 @@ public class Cat extends Animal {
     public Cat() {
     }
 
-    public Cat(String food, String location) {
-        super(food, location);
+    public Cat(String name ,String food, String location) {
+        super(name,food, location);
     }
 
     public String getColor() {
@@ -35,9 +35,7 @@ public class Cat extends Animal {
         if (this == o) return true;
         if (!(o instanceof Cat)) return false;
         if (!super.equals(o)) return false;
-
         Cat cat = (Cat) o;
-
         return Objects.equals(color, cat.color);
     }
 
@@ -50,8 +48,8 @@ public class Cat extends Animal {
 
     @Override
     public String toString() {
-        return "Cat { " +
-                "food='" + getFood() + '\'' +
+        return "Cat { " +  "name='" + getNames()+ '\'' +
+                " food='" + getFood() + '\'' +
                 ", location='" + getLocation() + '\'' +
                 " }";
     }

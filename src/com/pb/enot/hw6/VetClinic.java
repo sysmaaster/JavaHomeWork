@@ -1,29 +1,25 @@
 package com.pb.enot.hw6;
 
+import java.lang.reflect.Constructor;
+
 public class VetClinic {
-        public static void main(String[] args) throws Exception {
 
-            Veterinarian veterinarian = new Veterinarian();
-            Animal[] animals = new Animal[3];
-            animals[0] = new Dog("Каша и кости", "Двор частного дома");
-            animals[1] = new Horse("Сено", "Степь" ,2.8);
-            animals[2] = new Cat("Молоко и рыба", "Квартира");
+    public static void main(String[] args) throws Exception {
 
-         for (Animal animal : animals) { veterinarian.treatAnimal(animal); }
+        Animal[] animals = new Animal[3];
 
+        animals[0] = new Horse("Герта", "Сено", "Ферма", 2.8);
+        animals[1] = new Dog("Зуфра","Каша и корм", "Двор частного дома");
+        animals[2] = new Cat("Саймон", "Молоко и рыба", "Квартира");
 
-
-   /*
-    Class<?> c = Class.forName("com.pb.enot.hw6.Veterinarian");
-            Object object = c.newInstance();
-            Constructor<?> constr = c.getConstructor(new Class[] {String.class});
-System.out.print(constr);
-    public class ReflectionCheck {
-// new ReflectionCheck();
-        public void  s
-            Class clazz = object.getClass();
-            System.out.println(clazz.getName());
+        Class<?> vetClazz = Class.forName("com.pb.enot.hw6.Veterinarian");
+        Constructor<?> constr = vetClazz.getConstructor();
+        Object obj = constr.newInstance();
+        for (Animal animal : animals) {
+            if (obj instanceof Veterinarian) {
+                Veterinarian.treatAnimal(animal);
+            }
         }
+    }
+}
 
-*/
-}}

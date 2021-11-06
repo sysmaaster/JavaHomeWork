@@ -3,26 +3,30 @@ package com.pb.enot.hw6;
 import java.util.Objects;
 
 public abstract class Animal {
+    private  String names;
     private String food;
     private String location;
 
     public Animal() {    }
-    public Animal(String food, String location) {
+    public Animal(String name,String food, String location) {
+        this.names = name;
         this.food = food;
         this.location = location;
     }
 
-    public String getFood() {   return food;    }
-    public void setFood(String food) {   this.food = food;   }
+    public String getNames() {      return names;   }
+    public void setNames(String names) {    this.names = names; }
+
+    public String getFood() {    return food;    }
+    public void setFood(String food) {   this.food = food;    }
+
     public String getLocation() {   return location;   }
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    public void setLocation(String location) {  this.location = location;    }
 
     public abstract void eat();
     public abstract String makeNoise();
 
-    public void sleep() { System.out.println("Животное спит. . .");    }
+    public void sleep() {   System.out.println("Животное спит. . .");    }
 
     @Override
     public boolean equals(Object o) {
@@ -41,4 +45,6 @@ public abstract class Animal {
         result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;
     }
+
+
 }
