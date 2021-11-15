@@ -1,11 +1,10 @@
 package com.pb.enot.hw7;
 
-public class TeeShirt extends Clothes implements IMaleClothes, IFemaleClothes{
-    public TeeShirt(Sizes size, String color) {
+public class Tshirt extends Clothes implements ManClothes, dressWomen {
+    public Tshirt(Sizes size, String color) {
         super(size, color);
     }
-
-    public TeeShirt(Sizes size, String color, double cost) {
+    public Tshirt(Sizes size, String color, double cost) {
         super(size, color, cost);
     }
 

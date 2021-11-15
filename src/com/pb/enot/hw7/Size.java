@@ -15,7 +15,6 @@ enum Sizes {
     Sizes(int euroSize) {
         EuroSize = euroSize;
     }
-
     public String getDescription() {
         return "взрослый размер";
     }
@@ -24,6 +23,5 @@ enum Sizes {
     public String toString() {
         return name() + "(" + EuroSize + ") " + getDescription();
     }
-
     private int EuroSize;
 }

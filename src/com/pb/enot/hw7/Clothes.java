@@ -16,34 +16,20 @@ public abstract class Clothes {
         this.cost = cost;
     }
 
-    public Sizes getSize() {
-        return size;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
+    public Sizes getSize() {        return size;    }
+    public String getColor() {        return color;    }
+    public double getCost() {        return cost;    }
+    public void setCost(double cost) {        this.cost = cost;    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Clothes)) return false;
-
         Clothes clothes = (Clothes) o;
-
         if (Double.compare(clothes.cost, cost) != 0) return false;
         if (size != clothes.size) return false;
         return color.equals(clothes.color);
     }
-
     @Override
     public int hashCode() {
         int result;

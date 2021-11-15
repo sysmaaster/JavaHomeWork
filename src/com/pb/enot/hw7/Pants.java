@@ -1,11 +1,10 @@
 package com.pb.enot.hw7;
 
-public class Trousers extends Clothes implements IMaleClothes, IFemaleClothes{
-    public Trousers(Sizes size, String color) {
+public class Pants extends Clothes implements ManClothes, dressWomen {
+    public Pants(Sizes size, String color) {
         super(size, color);
     }
-
-    public Trousers(Sizes size, String color, double cost) {
+    public Pants(Sizes size, String color, double cost) {
         super(size, color, cost);
     }
 
