@@ -1,19 +1,20 @@
 package com.pb.enot.hw8;
-import com.sun.deploy.association.Action;
+import com.pb.enot.hw8.exception.WrongLoginException;
+import com.pb.enot.hw8.exception.WrongPasswordException;
 
 import java.util.Scanner;
 
 public class OnlineShop {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws WrongLoginException, WrongPasswordException {
         Auth authUp = new Auth();
             Scanner init = new Scanner(System.in);
         System.out.println("Вітаю на нашому магазині. Для початку Закупів з раббвтой в 50% вам необхідно зареєструватися.");
-        System.out.println("Введіть ваш Логін >>");
+        System.out.print("Введіть ваш Логін >>");
         String rLogin = init.nextLine();
-        System.out.println("Введіть ваш Пароль >>");
+        System.out.print("Введіть ваш Пароль >>");
         String rPass = init.nextLine();
-        System.out.println("Повторіть пароль >>");
+        System.out.print("Повторіть пароль >>");
         String rPass2 = init.nextLine();
         authUp.signUp(rLogin,rPass,rPass2);
 

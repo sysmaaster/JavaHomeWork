@@ -45,8 +45,8 @@ class Exercise11 {
             else if (is_Letter(ch)) charCount++;
             else return false;
         }
-
         return (charCount >= 2 && numCount >= 2);
+
     }
     public static boolean is_Letter(char ch) {
         ch = Character.toUpperCase(ch);
