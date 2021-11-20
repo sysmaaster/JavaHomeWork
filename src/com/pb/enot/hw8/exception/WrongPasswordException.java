@@ -14,6 +14,6 @@ public class WrongPasswordException extends Exception {
 
     @Override
     public String toString() {
-        return "WrongPasswordException: " + detail;
+        return detail;
     }
 }

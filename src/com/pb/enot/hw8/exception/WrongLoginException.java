@@ -14,6 +14,6 @@ public class WrongLoginException extends Exception {
 
     @Override
     public String toString() {
-        return "WrongLoginException: " + detail;
+        return detail;
     }
 }
