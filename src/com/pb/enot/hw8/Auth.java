@@ -16,12 +16,12 @@ public class Auth {
     }
 
     public void signUp(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
-        if (Pattern.matches("[a-zA-Z0-9]{5,20}", login)) {            this.login = login;        }
-        else {            throw new WrongLoginException("Логин не соответствует требованиям! ");        }
-        if (Pattern.matches("[a-zA-Z0-9]{5,}(\\_*)",password)) {        }
-        else {     throw new WrongPasswordException("Пароль не соответствует требованиям! ");        }
-        if (password.equals(confirmPassword)) {           this.password = password;        }
-        else {      throw new WrongPasswordException("Введений пароль не сoвпадає");        }
+        if (Pattern.matches("[a-zA-Z0-9]{5,20}", login)) { this.login = login;        }
+        else {   throw new WrongLoginException("Логин не соответствует требованиям! ");     }
+        if (Pattern.matches("[a-zA-Z0-9]{5,}(\\_*)",password)) {                      }
+        else {   throw new WrongPasswordException("Пароль не соответствует требованиям! "); }
+        if (password.equals(confirmPassword)) {           this.password = password;         }
+        else {   throw new WrongPasswordException("Введений пароль не сoвпадає");           }
     }
 
     public void signIn(String login2, String password2) throws WrongPasswordException, WrongLoginException {
