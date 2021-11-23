@@ -1,7 +1,9 @@
 package com.pb.enot.hw9;
 
+
 import java.io.*;
-import java.util.*;
+import java.util.Random;
+import java.util.StringTokenizer;
 
 public class FileNumbers {
 
@@ -19,7 +21,7 @@ public class FileNumbers {
              int[][] arr = new int[10][10];
              Random random = new Random();
              System.out.println("File created: ");
-             writer.append('\n');
+
              for (int i = 0; i < arr.length; i++) {
                  for (int j = 0; j < arr[i].length; j++) {
                      arr[i][j] = random.nextInt(100);
@@ -29,34 +31,43 @@ public class FileNumbers {
              }
              writer.flush();
          } catch (IOException e) {
-             System.out.println("Щось пішло не так!");
+             System.out.println("Шота сломалось :(");
              e.printStackTrace();
          }
      }
 
     public static void createOddNumbersFile () throws Exception{
         File file = new File("D:/IdeaProjects/JavaHomeWork/numbers.txt");
-        String [][] value = new String [11][10];
+        int [][] odd = new int [10][10];
         BufferedReader br  = new BufferedReader(new FileReader(file));
         String line = null;
         int row = 0;
         int col = 0;
-
+        int n = odd.length;
+try{FileWriter writer = new FileWriter("odd-numbers.txt", false);
         while((line = br.readLine()) != null ){
             StringTokenizer s = new StringTokenizer(line," ");
             while (s.hasMoreTokens()){
-                value[row][col] = s.nextToken();
-                if (col != 9){
-                    col++;
-                }else {
-               break;}
-            }
-            col = 0;
+                odd[row][col] = Integer.parseInt(s.nextToken());
+                if (odd[row][col]%2 == 0) {
+                    odd[row][col] = 0;
+                    writer.write( odd[row][col] + " ");
+                }else { writer.write( odd[row][col] + " "); }
 
+
+
+                    col++;
+            }
+            writer.append('\n');
+            col = 0;
                 row++;
         }
+    writer.flush();
+        writer.close();
+} catch (IOException e) {
+    System.out.println("Шота сломалось :(");
+    e.printStackTrace();
+}
+
     }
-
-
-
 }
