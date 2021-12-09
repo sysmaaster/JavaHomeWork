@@ -1,19 +1,27 @@
 package em.berely.life;
 
-public class Bank {
-    private double debit;
-    private double credit;
+import java.lang.reflect.Array;
 
-    public double getDebit() {        return debit;    }
+public class Bank {
+    private double debit;   //  дохід банку від транзакцій
+    private double credit; //   Сума позик виданих банком
+
+    public Bank() {    }
+
+
+
+    public double getDebit() {       return debit;    }
     public void setDebit(double debit) {        this.debit = debit;    }
     public double getCredit() {        return credit;    }
     public void setCredit(double credit) {        this.credit = credit;    }
+    public void getBankBalance(int inn) {
 
-    public Bank() {
+        });
     }
 
-    public double getBankBalance(int inn){
-return this.getCredit();
+    public static void Pay2Pay (int innP, int inn2P , int debitNumber ){
+
+
     }
 
 }

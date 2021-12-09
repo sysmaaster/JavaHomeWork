@@ -2,6 +2,7 @@ package em.berely.life;
 
 import java.util.Objects;
 
+
 public abstract class Human {
     private String name;
     private String status;
