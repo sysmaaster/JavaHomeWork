@@ -15,6 +15,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/hw1" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/hw10" />
       <excludeFolder url="file://$MODULE_DIR$/src/em/berely/life" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/test" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

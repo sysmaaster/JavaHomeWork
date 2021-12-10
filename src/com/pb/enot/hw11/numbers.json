@@ -1,0 +1,39 @@
+[ {
+  "firstName" : "sasa",
+  "lastName" : "enot",
+  "phone" : "099",
+  "dateOfBirth" : "1995-09-11",
+  "phoneNumbers" : [
+    {
+      "type": "home",
+      "number": "542 666-1234"
+    },
+    {
+      "type": "fax",
+      "number": "653 666-4567"
+    }
+  ],
+  "streetAddress" : "dsa",
+  "modifyDate" : "2021-12-11T00:39:17.040"
+}, {
+  "firstName" : "dasa",
+  "lastName" : "belka",
+  "phone" : "088",
+  "dateOfBirth" : "2021-12-11",
+  "phoneNumbers" : [
+    {
+      "type": "home",
+      "number": "000 000-0000"
+    }
+  ],
+  "streetAddress" : "dsaw",
+  "modifyDate" : "2021-12-11T00:40:09.131"
+}, {
+  "firstName" : "eva",
+  "lastName" : "andser",
+  "phone" : "047",
+  "dateOfBirth" : "1996-05-06",
+  "phoneNumbers" : null,
+  "streetAddress" : "New York",
+  "modifyDate" : "2021-12-11T00:40:28.126"
+} ]
