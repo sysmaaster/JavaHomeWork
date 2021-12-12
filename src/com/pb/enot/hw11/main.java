@@ -6,11 +6,11 @@ public  class main {
 
         PhoneBook pb = new PhoneBook();
 
-        //pb.printGUI();  // меню
-        //pb.run();  //  меню с вибором
+        pb.printGUI();  // меню
+        pb.run();  //  меню с вибором
 
-        pb.backupContactFile();
-        pb.displayMember();
+      //  pb.backupContactFile();
+      //  pb.displayMember();
 
 
         System.out.println(pb.member);
