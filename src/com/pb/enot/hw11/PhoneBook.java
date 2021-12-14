@@ -124,19 +124,52 @@ public class PhoneBook {
 //  -*****************-поиск элементов-*************************
     public  void searchMember() throws Exception {
         System.out.println(member);
-        searchOneMember();
-
-
+            boolean flag = false; // решение о том, найти ли совпадение
+            Scanner init = new Scanner(System.in);
+            System.out.println("Якщо ви хочете шукати :" + "\n"+
+                    "за назвою, введіть 1" + "\n" +
+                    "за Фамфлією >> 2" + "\n" +
+                    "за номером  >> 3");
+            System.out.print( ">> ");
+            String searchType  = init.next();
+            switch (searchType) {
+                case "1":
+                    System.out.print( "Введіть імя Для Пошуку: >> ");
+                    Scanner string1 = new Scanner(System.in);
+                    String getName = string1.nextLine();
+                    for(PhoneBook c:member)
+                    {
+                        if (c.getFirstName().equals(getName)) {
+                            flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
+                            System.out.println(c);
+                        }
+                    }
+                    if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
+                        System.out.print("Нічого не Знайдено!\n");
+                    }
+                    // FIND BY NAME
+                    break;
+                case "2":
+                    System.out.print( "Введіть Фамілію Для Пошуку: >> ");
+                    Scanner string2 = new Scanner(System.in);
+                    String getLast = string2.nextLine();
+                    for(PhoneBook c:member)
+                    {
+                        if (c.getLastName().equals(getLast)) {
+                            flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
+                            System.out.println(c);
+                        }
+                    }
+                    if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
+                        System.out.print("Нічого не Знайдено!\n");
+                    }
+                    // FIND BY PHONE
+                    break;
+                default: break;
+            }
         printGUI();
         run();
-    }
-//  -*****************-поиск возврат ІД-**************************
-    public void searchOneMember() {
-
-
-
-
-    } //Пустий*********************
+    }//-********
 //  -*****************-вывод всех записей -***********************
     public  void displayMember() throws Exception {
         System.out.println("Ласкаво просимо до нашої книги зв'язків!");
@@ -144,7 +177,8 @@ public class PhoneBook {
         Scanner init = new Scanner(System.in);
         System.out.println("Виконати Сортуваня За :" + "\n"+
                 "назвою, введіть 1" + "\n" +
-                "Фамфлією >> 2");
+                "Фамфлією    ->  2"  + "\n" +
+                "За адресою - >  3");
         System.out.print( ">> ");
         String searchType  = init.next();
 
@@ -154,23 +188,23 @@ public class PhoneBook {
                 System.out.println(member);
                 break;
             case "2":
-                member.sort(Comparator.comparing(PhoneBook::getLastName));
+                member.sort((o1, o2) -> o1.getLastName().compareTo(o2.getLastName()));
                 System.out.println(member);
                 // FIND BY PHONE
                 break;
             case "3":
-                member.sort(Comparator.comparing(PhoneBook::getStreetAddress));
+                member.sort((o1, o2) -> o1.getStreetAddress().compareTo(o2.getStreetAddress()));
                 System.out.println(member);
                 break;
             default: break;
         }
         printGUI();
         run();
-    }//-*******  + lamda
+    }//-*******  + lamda ! ! !
 //  -*****************-редактирование элемента-*****************
     public void modifyMember() throws Exception {
         System.out.print("Кого из участников вы хотите изменить?\n");
-        searchOneMember();
+       // searchOneMember();
         System.out.print("Пожалуйста, введите новую информацию:\n");
         Scanner init = new Scanner(System.in);
 
@@ -247,7 +281,7 @@ public class PhoneBook {
                 break;
             case 3:           // поиск элементов
 
-                //*****    searchOneMember();
+                searchMember();
                 break;
             case 4:           // вывод всех записей с сортировкой по указанному полю
 
