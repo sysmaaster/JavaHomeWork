@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 //  -************************-телефоны -**************************
@@ -37,7 +38,7 @@ public class PhoneBook {
         this.streetAddress = streetAddress;
         this.modifyDate = LocalDateTime.now();
     }
-//  -*****************-добавление элемента-*****************
+//  -*****************-добавление элемента-*********************
     public void newContact() throws Exception {
         String qq;
         String pNumb;
@@ -72,8 +73,8 @@ public class PhoneBook {
         System.out.println(member);
         printGUI();
         run();
-    }
-//  -*****************-delete элементов-*****************  + lamda
+    }//-**********
+//  -*****************-delete элементов-************************
     public void deleteContact() throws Exception{
         Scanner init = new Scanner(System.in);
         boolean flag = false; // решение о том, найти ли совпадение
@@ -119,8 +120,8 @@ public class PhoneBook {
         }
         printGUI();
         run();
-    }
-//  -*****************-поиск элементов-*****************
+    }//-********
+//  -*****************-поиск элементов-*************************
     public  void searchMember() throws Exception {
         System.out.println(member);
         searchOneMember();
@@ -129,71 +130,43 @@ public class PhoneBook {
         printGUI();
         run();
     }
-//  -*****************-поиск возврат ІД-*****************
+//  -*****************-поиск возврат ІД-**************************
     public void searchOneMember() {
-        System.out.println(member);
-        boolean flag = false; // решение о том, найти ли совпадение
+
+
+
+
+    } //Пустий*********************
+//  -*****************-вывод всех записей -***********************
+    public  void displayMember() throws Exception {
+        System.out.println("Ласкаво просимо до нашої книги зв'язків!");
+        System.out.println(member.size() + "- збережено в памяті");
         Scanner init = new Scanner(System.in);
-        System.out.println("Якщо ви хочете шукати :" + "\n"+
-                "за назвою, введіть 1" + "\n" +
-                "за Фамфлією >> 2" + "\n" +
-                "за номером  >> 3");
+        System.out.println("Виконати Сортуваня За :" + "\n"+
+                "назвою, введіть 1" + "\n" +
+                "Фамфлією >> 2");
         System.out.print( ">> ");
         String searchType  = init.next();
 
         switch (searchType) {
             case "1":
-                System.out.println(member + "  111  ");
-                System.out.print( "Введіть імя Для Пошуку: >> ");
-                Scanner string1 = new Scanner(System.in);
-                String getName = string1.nextLine();
-                for(PhoneBook c:member)
-                {
-                    if (c.getFirstName().equals(getName)) {
-
-                        flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
-                        System.out.println(member.indexOf(c));
-                        // return member.indexOf(c);
-                        System.out.println(c);
-                        break;
-                    }
-                }
-                if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
-                    System.out.print("Нічого не Знайдено!\n");
-                }
-                // FIND BY NAME
+                member.sort(Comparator.comparing(PhoneBook::getFirstName));
+                System.out.println(member);
                 break;
             case "2":
-                System.out.println(member + "  222  ");
-                System.out.print( "Введіть Фамілію Для Пошуку: >> ");
-                Scanner string2 = new Scanner(System.in);
-                String getLast = string2.nextLine();
-                for(PhoneBook c:member)
-                {
-                    if (c.getLastName().equals(getLast)) {
-                        flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
-                        //  return member.indexOf(c);
-                        System.out.println(c);
-                        break;
-                    }
-                }
-                if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
-                    System.out.print("Нічого не Знайдено!\n");
-                }
+                member.sort(Comparator.comparing(PhoneBook::getLastName));
+                System.out.println(member);
                 // FIND BY PHONE
+                break;
+            case "3":
+                member.sort(Comparator.comparing(PhoneBook::getStreetAddress));
+                System.out.println(member);
                 break;
             default: break;
         }
-
-    }
-//  -*****************-вывод всех записей -*****************
-    public  void displayMember() throws Exception {
-        System.out.println("Ласкаво просимо до нашої книги зв'язків!");
-        System.out.println(member.size() + "- збережено в памяті");
-
         printGUI();
         run();
-    }
+    }//-*******  + lamda
 //  -*****************-редактирование элемента-*****************
     public void modifyMember() throws Exception {
         System.out.print("Кого из участников вы хотите изменить?\n");
@@ -240,7 +213,7 @@ public class PhoneBook {
      public void backupContactFile() throws Exception {
 
     }
-    //  -*****************-Меню-*****************
+    //  -*****************-Меню-*******************
     public void printGUI()    {
 
         System.out.println("...Меню...");
@@ -254,7 +227,8 @@ public class PhoneBook {
                         " 7 загрузка из файла всех данных"    + "\n"+
                         " 0 Вийти!");
         System.out.println(" ");
-    }
+        System.out.println(member);
+    }//-*************
 //  -*****************-функционал-*****************
     public void run() throws Exception {
         //  System.out.println(member);
@@ -265,42 +239,40 @@ public class PhoneBook {
         n = init.nextInt();
         switch (n) {
             case 1:            // добавление элемента
-                System.out.println(1);
-                newContact();
+
+                newContact();  //провірено*********
                 break;
             case 2:           // удаление элемента
-                deleteContact();
+                deleteContact();  //провірено*******
                 break;
             case 3:           // поиск элементов
-                System.out.println(3);
-                searchOneMember();
-              //  pb.searchMember();
+
+                //*****    searchOneMember();
                 break;
             case 4:           // вывод всех записей с сортировкой по указанному полю
-                System.out.println(4);
+
                 displayMember();
                 break;
             case 5:           // редактирование элемента
-                System.out.println(5);
-                modifyMember();
+
+                //*****    modifyMember();
                 break;
             case 6:           // запись в файл всех данных
-                System.out.println(6);
-                 createNumbersFile();
+
+                //*****     createNumbersFile();
                 break;
             case 7:           // загрузка из файла всех данных
-                System.out.println(7);
-                backupContactFile();
+
+                //*****    backupContactFile();
                 break;
             case 0:          // qex
                 System.out.println("exit! ");
-                System.out.println(0);
-                System.exit(0);
+                System.exit(0);  //провірено
                 break;
             default:
                 break;
         }
-    }
+    }//-****
 //  -*****************---*****************-
     ArrayList<PhoneBook> member = new ArrayList<>();
     ArrayList<Phones> phone = new ArrayList<>(); //телефоны (количество не ограничено) +
@@ -323,7 +295,7 @@ public class PhoneBook {
 
                 ", Імя/Фамілія'" + firstName  +
                 "/'" + lastName +
-                ", Телефони:" + (phone) + "\n" +
+                ", Телефони:" + (phone) +
                 ", Дата народженя " + dateOfBirth +
                 ", Адреса '" + streetAddress + '\'' +
                 ", Дата модифікації " + modifyDate +
