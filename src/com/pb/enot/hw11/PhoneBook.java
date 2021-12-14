@@ -8,14 +8,13 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+
 //  -************************-телефоны -**************************
 //  -****************-(количество не ограничено)-*****************
 class Phones {
     public String type;
     public String number;
-    public Phones() {    }
     public Phones(String type, String number) {
         this.type = type;
         this.number = number;
@@ -30,10 +29,10 @@ public class PhoneBook {
 //  -*****************---*****************
     public PhoneBook() {    }
 //  -*****************---*****************
-    public PhoneBook(String firstName, String lastName, ArrayList phonsLists, LocalDate dateOfBirth, String streetAddress) throws JsonProcessingException {
+    public PhoneBook(String firstName, String lastName, ArrayList<Phones> phoneList, LocalDate dateOfBirth, String streetAddress) throws JsonProcessingException {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phones =  phonsLists;
+        this.phone =  phoneList;
         this.dateOfBirth = dateOfBirth;
         this.streetAddress = streetAddress;
         this.modifyDate = LocalDateTime.now();
@@ -45,16 +44,16 @@ public class PhoneBook {
         String pType;
         Scanner init = new Scanner(System.in);
         System.out.print("Створеня нового контакту:");
-       System.out.print("Імя >>" );           String firstNames = "Олександр"; // init.next();
+       System.out.print("Імя >>" );           String firstNames =   init.next();//"Олександр";
         System.out.print("Фамілія >>");        String lastNames = "Андрущишен"; //  init.next();
         //  -***
         System.out.println("Введіть ");
         do {
-            System.out.print("Тип номеру: ->");  pType =  init.next(); //= "Робочий";
-            System.out.print("Номер -> ");       pNumb = init.next(); // "0997624803";
+            System.out.print("Тип номеру: ->");  pType  = "Робочий";//=  init.next();
+            System.out.print("Номер -> ");       pNumb =  "0997624803";// init.next();
             System.out.print("добавить ще? так/ні --> ");   qq = init.next();
             Phones phonee =  new Phones(pType,pNumb);
-            ph.add(phonee);
+            phone.add(phonee);
        }        while (!qq.equals("-"));
 
         System.out.print("streetAddress >>");        String streetAddress = "Десь в Полі";// init.next();
@@ -62,7 +61,7 @@ public class PhoneBook {
         System.out.print("Місяць >>");                int MM = 9;      //init.nextInt();
         System.out.print("Рік >>");                   int RR = 2020;   // init.nextInt();
 
-        PhoneBook cb = new PhoneBook(firstNames,lastNames,ph, LocalDate.of(RR, MM, DD),streetAddress);
+        PhoneBook cb = new PhoneBook(firstNames,lastNames,phone, LocalDate.of(RR, MM, DD),streetAddress);
         member.add(cb);
         // Проверяем, что назначение успешно
         for(PhoneBook c:member)
@@ -71,6 +70,53 @@ public class PhoneBook {
         }
         System.out.print(" Добавлено контакт  <" + cb.getFirstName() + " - " + cb.getLastName() + ">  Успішно!!\n");
         System.out.println(member);
+        printGUI();
+        run();
+    }
+//  -*****************-delete элементов-*****************  + lamda
+    public void deleteContact() throws Exception{
+        Scanner init = new Scanner(System.in);
+        boolean flag = false; // решение о том, найти ли совпадение
+        System.out.println("Видаленя контакту!");
+        System.out.println("Знайти за назвою, введіть 1" + "\n" +
+                           "за Фамфлією >> 2" + "\n" );
+        System.out.print( ">> ");
+        String searchType  = init.next();
+        switch (searchType) {
+            case "1": // FIND BY NAME
+        System.out.println( "Введіть Імя для Пошуку: >> ");
+        String getName = init.next();
+                for(PhoneBook c:member)
+                {
+                    if (c.getFirstName().equals(getName)) {
+                        member.remove(c);
+                        flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
+                        System.out.println("Контакт видалено!");
+                        break;
+                    }
+                }
+                if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
+                    System.out.print("Нічого не Знайдено!\n");
+
+                }break;
+        case "2":// FIND BY LastNAME
+        System.out.println( "Введіть Фамілію для Пошуку: >> ");
+        String getLast = init.next();
+            for(PhoneBook c:member)
+            {
+                if (c.getLastName().equals(getLast)) {
+                    member.remove(c);
+                    flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
+                    System.out.println("Контакт видалено!");
+                    break;
+                }
+            }
+            if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
+                System.out.print("Нічого не Знайдено!\n");
+
+            } break;
+        default: break;
+        }
         printGUI();
         run();
     }
@@ -142,10 +188,9 @@ public class PhoneBook {
     }
 //  -*****************-вывод всех записей -*****************
     public  void displayMember() throws Exception {
-        System.out.println("\n" +
-                "Ласкаво просимо до нашої книги зв'язків!\n");
+        System.out.println("Ласкаво просимо до нашої книги зв'язків!");
         System.out.println(member.size() + "- збережено в памяті");
-                System.out.println( member );
+
         printGUI();
         run();
     }
@@ -180,7 +225,6 @@ public class PhoneBook {
             String personsJson = mapper.writeValueAsString(member);
             System.out.println(personsJson);
 
-
             writer.write(personsJson);
             writer.flush();
             writer.close();
@@ -194,14 +238,6 @@ public class PhoneBook {
     }
 //  -*****************-загрузка из файла данных-*****************
      public void backupContactFile() throws Exception {
-         File file = Paths.get("src/com/pb/enot/hw11/numbers.json").toFile();
-         FileInputStream fileInputStream = new FileInputStream(file);
-         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-     //    ArrayList<PhoneBook> persons = (ArrayList<PhoneBook>)  objectInputStream.readObject();
-
-         System.out.println(objectInputStream);
-
 
     }
     //  -*****************-Меню-*****************
@@ -233,8 +269,7 @@ public class PhoneBook {
                 newContact();
                 break;
             case 2:           // удаление элемента
-                System.out.println(2);
-
+                deleteContact();
                 break;
             case 3:           // поиск элементов
                 System.out.println(3);
@@ -268,11 +303,10 @@ public class PhoneBook {
     }
 //  -*****************---*****************-
     ArrayList<PhoneBook> member = new ArrayList<>();
-    ArrayList<Phones> ph = new ArrayList<>(); //телефоны (количество не ограничено) +
+    ArrayList<Phones> phone = new ArrayList<>(); //телефоны (количество не ограничено) +
 //  -*****************---*****************-
     private String firstName = "";          //   ім'я
     private String lastName = "";          //  Прізвеще
-    private ArrayList phones;                //телефон
     private LocalDate dateOfBirth;       //дата рождения
     private String streetAddress;       //адрес
     private LocalDateTime modifyDate;  //дата и время редактирования
@@ -289,7 +323,7 @@ public class PhoneBook {
 
                 ", Імя/Фамілія'" + firstName  +
                 "/'" + lastName +
-                ", Телефони " + (phones) +
+                ", Телефони:" + (phone) + "\n" +
                 ", Дата народженя " + dateOfBirth +
                 ", Адреса '" + streetAddress + '\'' +
                 ", Дата модифікації " + modifyDate +
