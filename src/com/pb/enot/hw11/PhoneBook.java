@@ -1,42 +1,30 @@
 package com.pb.enot.hw11;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+
+import java.util.*;
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Scanner;
 
-//  -************************-телефоны -**************************
-//  -****************-(количество не ограничено)-*****************
-class Phones {
-    public String type;
-    public String number;
-    public Phones(String type, String number) {
-        this.type = type;
-        this.number = number;
-    }
-    @Override
-    public String toString() {
-        return  "Тип'" + type + '\'' +
-                ", Номер '" + number + '\'' ;
-    }
-}
 public class PhoneBook {
 //  -*****************---*****************
     public PhoneBook() {    }
 //  -*****************---*****************
-    public PhoneBook(String firstName, String lastName, ArrayList<Phones> phoneList, LocalDate dateOfBirth, String streetAddress) throws JsonProcessingException {
+    public PhoneBook(String firstName, String lastName, String phone, LocalDate dateOfBirth, String streetAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phone =  phoneList;
+        this.phone =  phone;
         this.dateOfBirth = dateOfBirth;
         this.streetAddress = streetAddress;
         this.modifyDate = LocalDateTime.now();
+    }
+//стрим  -*****************-Показать элементu-*********************   //
+    public void contactView() {
+
+
+        member.stream().forEach(System.out::println);
+
     }
 //  -*****************-добавление элемента-*********************
     public void newContact() throws Exception {
@@ -49,20 +37,15 @@ public class PhoneBook {
         System.out.print("Фамілія >>");        String lastNames = "Андрущишен"; //  init.next();
         //  -***
         System.out.println("Введіть ");
-        do {
-            System.out.print("Тип номеру: ->");  pType  = "Робочий";//=  init.next();
             System.out.print("Номер -> ");       pNumb =  "0997624803";// init.next();
             System.out.print("добавить ще? так/ні --> ");   qq = init.next();
-            Phones phonee =  new Phones(pType,pNumb);
-            phone.add(phonee);
-       }        while (!qq.equals("-"));
 
         System.out.print("streetAddress >>");        String streetAddress = "Десь в Полі";// init.next();
         System.out.print("День >>");                  int DD = 11;      //init.nextInt();
         System.out.print("Місяць >>");                int MM = 9;      //init.nextInt();
         System.out.print("Рік >>");                   int RR = 2020;   // init.nextInt();
 
-        PhoneBook cb = new PhoneBook(firstNames,lastNames,phone, LocalDate.of(RR, MM, DD),streetAddress);
+        PhoneBook cb = new PhoneBook(firstNames,lastNames,pNumb, LocalDate.of(RR, MM, DD),streetAddress);
         member.add(cb);
         // Проверяем, что назначение успешно
         for(PhoneBook c:member)
@@ -74,50 +57,34 @@ public class PhoneBook {
         printGUI();
         run();
     }//-**********
-//  -*****************-delete элементов-************************
+//  lamda -*****************-delete элементов-************************
     public void deleteContact() throws Exception{
         Scanner init = new Scanner(System.in);
         boolean flag = false; // решение о том, найти ли совпадение
         System.out.println("Видаленя контакту!");
         System.out.println("Знайти за назвою, введіть 1" + "\n" +
-                           "за Фамфлією >> 2" + "\n" );
+                           "за Фамілією >> 2" + "\n" +
+                           "Адресою >> 3" + "\n" );
         System.out.print( ">> ");
         String searchType  = init.next();
         switch (searchType) {
             case "1": // FIND BY NAME
         System.out.println( "Введіть Імя для Пошуку: >> ");
-        String getName = init.next();
-                for(PhoneBook c:member)
-                {
-                    if (c.getFirstName().equals(getName)) {
-                        member.remove(c);
-                        flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
-                        System.out.println("Контакт видалено!");
-                        break;
-                    }
-                }
-                if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
-                    System.out.print("Нічого не Знайдено!\n");
-
-                }break;
+                member.removeIf(c -> c.getFirstName().equals(init.next()));
+                System.out.println("Контакт удален! ");
+                break;
         case "2":// FIND BY LastNAME
         System.out.println( "Введіть Фамілію для Пошуку: >> ");
-        String getLast = init.next();
-            for(PhoneBook c:member)
-            {
-                if (c.getLastName().equals(getLast)) {
-                    member.remove(c);
-                    flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
-                    System.out.println("Контакт видалено!");
-                    break;
-                }
-            }
-            if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
-                System.out.print("Нічого не Знайдено!\n");
-
-            } break;
+            member.removeIf(c -> c.getLastName().equals(init.next()));
+            System.out.println("Контакт удален! ");
+            case "3":
+                System.out.println( "Введіть Адрес для Пошуку: >> ");
+                member.removeIf(c -> c.getStreetAddress().equals(init.next()));
+                System.out.println("Контакт удален! ");
+             break;
         default: break;
         }
+
         printGUI();
         run();
     }//-********
@@ -133,45 +100,26 @@ public class PhoneBook {
             System.out.print( ">> ");
             String searchType  = init.next();
             switch (searchType) {
-                case "1":
+                case "1":// FIND BY NAME
                     System.out.print( "Введіть імя Для Пошуку: >> ");
-                    Scanner string1 = new Scanner(System.in);
-                    String getName = string1.nextLine();
-                    for(PhoneBook c:member)
-                    {
-                        if (c.getFirstName().equals(getName)) {
-                            flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
-                            System.out.println(c);
-                        }
-                    }
-                    if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
-                        System.out.print("Нічого не Знайдено!\n");
-                    }
-                    // FIND BY NAME
+                    member.stream().filter(c -> c.getFirstName().equals(init.next())).forEach(System.out :: println);
+
                     break;
-                case "2":
+                case "2": //  firstName
                     System.out.print( "Введіть Фамілію Для Пошуку: >> ");
-                    Scanner string2 = new Scanner(System.in);
-                    String getLast = string2.nextLine();
-                    for(PhoneBook c:member)
-                    {
-                        if (c.getLastName().equals(getLast)) {
-                            flag = true; // Устанавливается в true при нахождении чего-либо, что соответствует
-                            System.out.println(c);
-                        }
-                    }
-                    if (!flag) {// флаг по-прежнему false, когда совпадений не найдено, вывести сообщение об ошибке
-                        System.out.print("Нічого не Знайдено!\n");
-                    }
-                    // FIND BY PHONE
+                    member.stream().filter(c -> c.getLastName().equals(init.next())).forEach(System.out :: println);
                     break;
+                case "3":// FIND BY PHONE
+                    System.out.print( "Введіть Фамілію Для Пошуку: >> ");
+                    member.stream().filter(c -> c.getFirstName().equals(init.next())).forEach(System.out :: println);
+
                 default: break;
             }
         printGUI();
         run();
     }//-********
-//  -*****************-вывод всех записей -***********************
-    public  void displayMember() throws Exception {
+// lamda -*****************-вывод всех записей -***********************
+    public  void shortBY() throws Exception {
         System.out.println("Ласкаво просимо до нашої книги зв'язків!");
         System.out.println(member.size() + "- збережено в памяті");
         Scanner init = new Scanner(System.in);
@@ -200,53 +148,103 @@ public class PhoneBook {
         }
         printGUI();
         run();
-    }//-*******  + lamda ! ! !
+    }//-*******  +  ! ! !
 //  -*****************-редактирование элемента-*****************
     public void modifyMember() throws Exception {
-        System.out.print("Кого из участников вы хотите изменить?\n");
-       // searchOneMember();
-        System.out.print("Пожалуйста, введите новую информацию:\n");
+        if (member.isEmpty()) {
+            System.out.println("Список пуст! ");
+        } else {
+            for (int i = 0; i < member.size(); i++) {
+                System.out.println("#" + (i + 1) + " " + member.get(i));
+            }
+            System.out.println();
+        }
+        System.out.println("Введите номер редактируемого контакта: ");
         Scanner init = new Scanner(System.in);
+        int index = init.nextInt();
+        try {
+            boolean exit = false;
+            do {
+                System.out.println("Введіть 1, щоб відредагувати ім'я\n" +
+                                   "Введіть 2, щоб відредагувати Фамілію\n" +
+                                   "Введіть 3, щоб відредагувати номер\n" +
+                                   "Введіть 4, щоб відредагувати адресу\n" +
+                                   "Введіть 5, щоб редагувати дату\n" +
+                                   "Введіть 6, щоб выйти\n");
+                int com = init.nextInt();
+                switch (com) {
+                    case 1:
+                        System.out.println("Старое имя " + member.get(index-1).getFirstName());
+                        System.out.println("Введите новое имя: ");
+                        member.set(index-1, member.get(index-1)).setFirstName(init.next(), LocalDateTime.now());
+                        System.out.println("Новое имя: " + member.get(index-1).getFirstName());
 
+                        System.out.println("Контакт Збережено! ");//contacts.set(index-1, contacts.get(index-1));
+                        break;
+                    case 2:
+                        System.out.println("Старая фамілія " + member.get(index-1).getLastName());
+                        System.out.println("Введите новое фамілія: ");
+                        member.set(index-1, member.get(index-1)).setLastName(init.next(), LocalDateTime.now());
+                        System.out.println("Новое фамілія: " + member.get(index-1).getLastName());
+                        System.out.println("Контакт Збережено! ");
+                        break;
+                    case 3:
+                        System.out.println("Старый телефон: " + member.get(index-1).getPhone());
+                        System.out.println("Введите новый номер телефона: ");
+                        member.set(index-1, member.get(index-1)).setPhone(init.next(), LocalDateTime.now());
+                        System.out.println("Новый телефон: " + member.get(index-1).getPhone());
+                        System.out.println("Контакт Збережено! ");
+                        break;
+                    case 4:
+                        System.out.println("Старый адрес: " + member.get(index-1).getStreetAddress());
+                        System.out.println("Введите новый адрес: ");
+                        member.set(index-1, member.get(index-1)).setStreetAddress(init.next(), LocalDateTime.now());
+                        System.out.println("Новый адрес: " + member.get(index-1).getStreetAddress());
+                        System.out.println("Контакт Збережено! ");
+                        break;
+                    case 5:
+                        System.out.println("Старая дата рождения: " + member.get(index-1).getDateOfBirth());
+                        System.out.println("Введите новую дату рождения через в формате XXXX XX XX через пробел: ");
+                        member.set(index-1, member.get(index-1)).setDateOfBirth(LocalDate.of(init.nextInt(), init.nextInt(), init.nextInt()),
+                                LocalDateTime.now());
+                        System.out.println("Новая дата рождения: " + member.get(index-1).getDateOfBirth());
+                        System.out.println("Контакт Збережено! ");
+                        break;
+                    case 6:
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Попробуйте еще раз. \n");
+                }
+            }  while (!exit);
 
-
-      //  System.out.printf("Участник %s  збережено!! \n", getFirstName());
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("String: " + e);
+        }
+        System.out.println();
         printGUI();
         run();
     }
 //  -*****************-запись в файл всех данных-*****************
-    public  void createNumbersFile() throws Exception {
-
-        try (FileWriter writer = new FileWriter("src/com/pb/enot/hw11/numbers.json", false)) {
-
-            ObjectMapper mapper = new ObjectMapper();
-            SimpleModule modules = new SimpleModule();
-            modules.addSerializer(LocalDate.class, new LocalDateSerializer());
-            modules.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
-            modules.addDeserializer(LocalDate.class, new LocalDateDeserializer());
-            modules.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
-            mapper.registerModule(modules);
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-            String personsJson = mapper.writeValueAsString(member);
-            System.out.println(personsJson);
-
-            writer.write(personsJson);
-            writer.flush();
-            writer.close();
-            System.out.println("File created: !!!");
-            run();
-        } catch (IOException e) {
-            System.out.println("Шота сломалось :(");
-            e.printStackTrace();
-            run();
+    public  void createNumbersFile() throws IOException {
+            File file = Paths.get("contacts.data").toFile();
+            FileOutputStream outputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(member);
+            System.out.println("Файл записан! ");
+            objectOutputStream.close();
+            System.out.println(new String(Files.readAllBytes(Paths.get("contacts.data"))));
         }
-    }
 //  -*****************-загрузка из файла данных-*****************
      public void backupContactFile() throws Exception {
-
-    }
+         ArrayList<PhoneBook> newContacts;
+         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("contacts.data"));
+         newContacts = (ArrayList<PhoneBook>) objectInputStream.readObject();
+         for (PhoneBook c : newContacts) {
+             System.out.println(c.toString());
+         }
+     }
     //  -*****************-Меню-*******************
     public void printGUI()    {
 
@@ -273,32 +271,28 @@ public class PhoneBook {
         n = init.nextInt();
         switch (n) {
             case 1:            // добавление элемента
-
                 newContact();  //провірено*********
                 break;
-            case 2:           // удаление элемента
+            case 2:             //просмотр элементов
+                contactView();
+                break;
+            case 3:     // удаление элемента
                 deleteContact();  //провірено*******
                 break;
-            case 3:           // поиск элементов
-
+            case 4:         // поиск элементов
                 searchMember();
                 break;
-            case 4:           // вывод всех записей с сортировкой по указанному полю
-
-                displayMember();
+            case 5:          // вывод всех записей с сортировкой по указанному полю
+                shortBY();
                 break;
-            case 5:           // редактирование элемента
-
-                //*****    modifyMember();
+            case 6:          // редактирование элемента
+                modifyMember();
                 break;
-            case 6:           // запись в файл всех данных
-
-                //*****     createNumbersFile();
+            case 7:           // запись в файл всех данных
+                createNumbersFile();
                 break;
-            case 7:           // загрузка из файла всех данных
-
-                //*****    backupContactFile();
-                break;
+            case 8:// загрузка из файла всех данных
+                backupContactFile();
             case 0:          // qex
                 System.out.println("exit! ");
                 System.exit(0);  //провірено
@@ -309,31 +303,37 @@ public class PhoneBook {
     }//-****
 //  -*****************---*****************-
     ArrayList<PhoneBook> member = new ArrayList<>();
-    ArrayList<Phones> phone = new ArrayList<>(); //телефоны (количество не ограничено) +
 //  -*****************---*****************-
     private String firstName = "";          //   ім'я
     private String lastName = "";          //  Прізвеще
     private LocalDate dateOfBirth;       //дата рождения
     private String streetAddress;       //адрес
     private LocalDateTime modifyDate;  //дата и время редактирования
+    private String phone ; //телефоны (количество не ограничено)
 //  -*****************---*****************-
-    public String getFirstName() {           return firstName;      }
-    public String getLastName() {            return lastName;       }
-    public LocalDate getDateOfBirth() {      return dateOfBirth;    }
-    public String getStreetAddress() {       return streetAddress;  }
-    public LocalDateTime getModifyDate() {   return modifyDate;     }
+    public ArrayList<PhoneBook> getMember() {        return member;    }
+    public String getPhone() {        return phone;    }
+    public String getFirstName() {        return firstName;    }
+    public String getLastName() {        return lastName;    }
+    public LocalDate getDateOfBirth() {        return dateOfBirth;    }
+    public String getStreetAddress() {        return streetAddress;    }
+    public LocalDateTime getModifyDate() {        return modifyDate;    }
+//  -*****************---*****************-
+    public void setMember(ArrayList<PhoneBook> member) {                      this.member = member;    }
+    public void setPhone (String phone, LocalDateTime now) {                  this.modifyDate = now;      this.phone = phone;                     }
+    public void setStreetAddress(String streetAddress, LocalDateTime now) {   this.modifyDate = now;      this.streetAddress = streetAddress;     }
+    public void setFirstName(String firstName, LocalDateTime now) {           this.modifyDate = now;      this.firstName = firstName;             }
+    public void setLastName(String lastName, LocalDateTime now) {             this.modifyDate = now;      this.lastName = lastName;               }
+    public void setDateOfBirth(LocalDate dateOfBirth, LocalDateTime now) {   this.modifyDate = now;       this.dateOfBirth = dateOfBirth;         }
+    public void setModifyDate(LocalDateTime modifyDate) {                     this.modifyDate = modifyDate;                                       }
 //  -*****************-String-*****************-
     @Override
     public String toString() {
-        return " {" +
-
-                ", Імя/Фамілія'" + firstName  +
-                "/'" + lastName +
+        return firstName + "/'" + lastName +
                 ", Телефони:" + (phone) +
                 ", Дата народженя " + dateOfBirth +
                 ", Адреса '" + streetAddress + '\'' +
-                ", Дата модифікації " + modifyDate +
-                '}'+ "\n";
+                ", Дата модифікації " + modifyDate + "\n";
     }
 //  -*****************- -*****************-
 }
