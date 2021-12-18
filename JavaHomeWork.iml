@@ -15,9 +15,12 @@
       <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/hw1" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/hw10" />
       <excludeFolder url="file://$MODULE_DIR$/src/em/berely/life" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/test" />
       <excludeFolder url="file://$MODULE_DIR$/src/em/berely" />
       <excludeFolder url="file://$MODULE_DIR$/src/em" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/pb/dolgopolyj/hw12" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/test" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/libraries" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/pb/enot/hw11" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
