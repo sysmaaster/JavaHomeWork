@@ -20,30 +20,23 @@ public class PhoneBook {
         this.modifyDate = LocalDateTime.now();
     }
 //стрим  -*****************-Показать элементu-*********************   //
-    public void contactView() {
-
-
+    public void contactView() throws Exception {
         member.stream().forEach(System.out::println);
-
+        printGUI();
+        run();
     }
 //  -*****************-добавление элемента-*********************
     public void newContact() throws Exception {
-        String qq;
         String pNumb;
-        String pType;
         Scanner init = new Scanner(System.in);
-        System.out.print("Створеня нового контакту:");
-       System.out.print("Імя >>" );           String firstNames =   init.next();//"Олександр";
-        System.out.print("Фамілія >>");        String lastNames = "Андрущишен"; //  init.next();
-        //  -***
-        System.out.println("Введіть ");
-            System.out.print("Номер -> ");       pNumb =  "0997624803";// init.next();
-            System.out.print("добавить ще? так/ні --> ");   qq = init.next();
-
-        System.out.print("streetAddress >>");        String streetAddress = "Десь в Полі";// init.next();
-        System.out.print("День >>");                  int DD = 11;      //init.nextInt();
-        System.out.print("Місяць >>");                int MM = 9;      //init.nextInt();
-        System.out.print("Рік >>");                   int RR = 2020;   // init.nextInt();
+        System.out.println("*********** Створеня нового контакту ***********");
+       System.out.print("Імя >>" );           String firstNames =   init.next();
+        System.out.print("Фамілія >>");        String lastNames =    init.next();
+        System.out.println("Введіть Номер -> ");       pNumb =   init.next();
+        System.out.print("streetAddress >>");        String streetAddress =  init.next();
+        System.out.print("День >>");                  int DD = init.nextInt();
+        System.out.print("Місяць >>");                int MM = init.nextInt();
+        System.out.print("Рік >>");                   int RR =  init.nextInt();
 
         PhoneBook cb = new PhoneBook(firstNames,lastNames,pNumb, LocalDate.of(RR, MM, DD),streetAddress);
         member.add(cb);
@@ -53,14 +46,12 @@ public class PhoneBook {
             System.out.println(c);
         }
         System.out.print(" Добавлено контакт  <" + cb.getFirstName() + " - " + cb.getLastName() + ">  Успішно!!\n");
-        System.out.println(member);
         printGUI();
         run();
     }//-**********
 //  lamda -*****************-delete элементов-************************
     public void deleteContact() throws Exception{
         Scanner init = new Scanner(System.in);
-        boolean flag = false; // решение о том, найти ли совпадение
         System.out.println("Видаленя контакту!");
         System.out.println("Знайти за назвою, введіть 1" + "\n" +
                            "за Фамілією >> 2" + "\n" +
@@ -71,6 +62,7 @@ public class PhoneBook {
             case "1": // FIND BY NAME
         System.out.println( "Введіть Імя для Пошуку: >> ");
                 member.removeIf(c -> c.getFirstName().equals(init.next()));
+                System.out.println(member);
                 System.out.println("Контакт удален! ");
                 break;
         case "2":// FIND BY LastNAME
@@ -91,7 +83,6 @@ public class PhoneBook {
 //  -*****************-поиск элементов-*************************
     public  void searchMember() throws Exception {
         System.out.println(member);
-            boolean flag = false; // решение о том, найти ли совпадение
             Scanner init = new Scanner(System.in);
             System.out.println("Якщо ви хочете шукати :" + "\n"+
                     "за назвою, введіть 1" + "\n" +
@@ -133,16 +124,31 @@ public class PhoneBook {
         switch (searchType) {
             case "1":
                 member.sort(Comparator.comparing(PhoneBook::getFirstName));
-                System.out.println(member);
+                if (member.isEmpty()) {
+                    System.out.println("Список пуст! ");
+                } else {
+                    for (PhoneBook phoneBook : member) System.out.println("# " + phoneBook);
+                    System.out.println();
+                }
                 break;
             case "2":
                 member.sort((o1, o2) -> o1.getLastName().compareTo(o2.getLastName()));
-                System.out.println(member);
+                if (member.isEmpty()) {
+                    System.out.println("Список пуст! ");
+                } else {
+                    for (PhoneBook phoneBook : member) System.out.println("# " + phoneBook);
+                    System.out.println();
+                }
                 // FIND BY PHONE
                 break;
             case "3":
                 member.sort((o1, o2) -> o1.getStreetAddress().compareTo(o2.getStreetAddress()));
-                System.out.println(member);
+                if (member.isEmpty()) {
+                    System.out.println("Список пуст! ");
+                } else {
+                    for (PhoneBook phoneBook : member) System.out.println("# " + phoneBook);
+                    System.out.println();
+                }
                 break;
             default: break;
         }
@@ -170,7 +176,7 @@ public class PhoneBook {
                                    "Введіть 3, щоб відредагувати номер\n" +
                                    "Введіть 4, щоб відредагувати адресу\n" +
                                    "Введіть 5, щоб редагувати дату\n" +
-                                   "Введіть 6, щоб выйти\n");
+                                   "Введіть 0, щоб выйти\n");
                 int com = init.nextInt();
                 switch (com) {
                     case 1:
@@ -210,7 +216,7 @@ public class PhoneBook {
                         System.out.println("Новая дата рождения: " + member.get(index-1).getDateOfBirth());
                         System.out.println("Контакт Збережено! ");
                         break;
-                    case 6:
+                    case 0:
                         exit = true;
                         break;
                     default:
@@ -227,7 +233,7 @@ public class PhoneBook {
         run();
     }
 //  -*****************-запись в файл всех данных-*****************
-    public  void createNumbersFile() throws IOException {
+    public  void createNumbersFile() throws Exception {
             File file = Paths.get("contacts.data").toFile();
             FileOutputStream outputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
@@ -235,6 +241,8 @@ public class PhoneBook {
             System.out.println("Файл записан! ");
             objectOutputStream.close();
             System.out.println(new String(Files.readAllBytes(Paths.get("contacts.data"))));
+        printGUI();
+        run();
         }
 //  -*****************-загрузка из файла данных-*****************
      public void backupContactFile() throws Exception {
@@ -244,31 +252,28 @@ public class PhoneBook {
          for (PhoneBook c : newContacts) {
              System.out.println(c.toString());
          }
+         printGUI();
+         run();
      }
     //  -*****************-Меню-*******************
     public void printGUI()    {
-
-        System.out.println("...Меню...");
+        System.out.println("\n...Меню...");
         System.out.println(
-                " 1 добавление элемента"              + "\n"+
-                        " 2 удаление элемента"                + "\n"+
-                        " 3 поиск элементов"                  + "\n"+
-                        " 4 вывод всех записей с сортировкой" + "\n"+
-                        " 5 редактирование элемента"          + "\n"+
-                        " 6 запись в файл всех данных"        + "\n"+
-                        " 7 загрузка из файла всех данных"    + "\n"+
-                        " 0 Вийти!");
-        System.out.println(" ");
-        System.out.println(member);
+                        " 1 добавление элемента"              + "\n"+
+                        " 2 Просмотр всех контактов"              + "\n"+
+                        " 3 удаление элемента"                + "\n"+
+                        " 4 поиск элементов"                  + "\n"+
+                        " 5 вывод всех записей с сортировкой" + "\n"+
+                        " 6 редактирование элемента"          + "\n"+
+                        " 7 запись в файл всех данных"        + "\n"+
+                        " 8 загрузка из файла всех данных"    + "\n"+
+                        " 0 Нейти?");
     }//-*************
 //  -*****************-функционал-*****************
     public void run() throws Exception {
-        //  System.out.println(member);
-        int n;
-        PhoneBook pb = new PhoneBook();
         Scanner init = new Scanner(System.in);
         System.out.print( ">> ");
-        n = init.nextInt();
+        int n = init.nextInt();
         switch (n) {
             case 1:            // добавление элемента
                 newContact();  //провірено*********
@@ -333,7 +338,7 @@ public class PhoneBook {
                 ", Телефони:" + (phone) +
                 ", Дата народженя " + dateOfBirth +
                 ", Адреса '" + streetAddress + '\'' +
-                ", Дата модифікації " + modifyDate + "\n";
+                ", Дата модифікації " + modifyDate ;
     }
 //  -*****************- -*****************-
 }
